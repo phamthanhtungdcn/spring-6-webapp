@@ -48,13 +48,8 @@ public class BootstrapData implements CommandLineRunner {
 
         nemoSaved.getBooks().add(javabookSaved);
         tungptSaved.getBooks().add(cSharpSaved);
-
-        authorRepository.save(nemoSaved);
-        authorRepository.save(tungptSaved);
-
-        System.out.println("Bootstrap");
-        System.out.println("Author count " + authorRepository.count());
-        System.out.println("Book count " + bookRepository.count());
+        javabookSaved.getAuthors().add(nemoSaved);
+        cSharpSaved.getAuthors().add(tungptSaved);
 
         Publisher kimdong = new Publisher();
         kimdong.setPublisherName("Kim Dong");
@@ -62,6 +57,7 @@ public class BootstrapData implements CommandLineRunner {
         kimdong.setCity("Ho Chi Minh");
         kimdong.setState("South");
         kimdong.setZip("8000");
+        Publisher kimDongSaved = publisherRepository.save(kimdong);
 
         Publisher ldxh = new Publisher();
         ldxh.setPublisherName("Lao Dong Xa Hoi");
@@ -69,9 +65,23 @@ public class BootstrapData implements CommandLineRunner {
         ldxh.setCity("Ha Noi");
         ldxh.setState("North");
         ldxh.setZip("4000");
+        Publisher ldxhSaved = publisherRepository.save(ldxh);
 
-        publisherRepository.save(kimdong);
-        publisherRepository.save(ldxh);
+        javabookSaved.setPublisher(kimDongSaved);
+        cSharpSaved.setPublisher(ldxhSaved);
+
+        authorRepository.save(nemoSaved);
+        authorRepository.save(tungptSaved);
+        bookRepository.save(javabookSaved);
+        bookRepository.save(cSharpSaved);
+
+        System.out.println("Bootstrap");
+        System.out.println("Author count " + authorRepository.count());
+        System.out.println("Book count " + bookRepository.count());
+
+
+
+
 
         System.out.println("Publisher count " + publisherRepository.count());
     }
